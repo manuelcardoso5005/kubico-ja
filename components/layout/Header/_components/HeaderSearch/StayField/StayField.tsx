@@ -130,7 +130,7 @@ export default function StayField({ active, onClick, onHoverChange, onChange, on
                 ×
               </span>
             )}
-          <ChevronDown size={12} strokeWidth={2} aria-hidden className={`${active ? 'rotate-180' : ''} text-neutral-400 transition-transform`} />
+          <ChevronDown size={12} strokeWidth={2} aria-hidden className={`${active ? 'rotate-180' : ''} text-neutral-400 transition-transform `} />
         </span>
       </button>
 

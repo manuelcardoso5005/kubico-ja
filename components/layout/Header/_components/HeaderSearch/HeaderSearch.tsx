@@ -71,5 +71,5 @@ export default function HeaderSearch() {
 }
 
 function Divider() {
-  return <div className="self-stretch w-px my-3 bg-neutral-200 dark:bg-neutral-700" />;
+  return <div className="self-stretch hidden w-px my-3 bg-neutral-200 dark:bg-neutral-700 md:block" />;
 }

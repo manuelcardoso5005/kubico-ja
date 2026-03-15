@@ -112,11 +112,13 @@ export default function PriceField({ active, onClick, onHoverChange, onChange, o
           ${active ? 'bg-neutral-50 dark:bg-neutral-800' : 'hover:bg-neutral-100 dark:hover:bg-neutral-800'}`}
       >
         <span className="flex flex-col min-w-0">
-          <span className="flex items-center gap-1.5 text-xs font-semibold text-neutral-900 dark:text-white mb-0.5">
-            <DollarSign size={12} strokeWidth={2} aria-hidden />
-            Preço
+          <span className="flex flex-col items-center justify-center gap-0.5 md:flex-row md:items-center md:justify-start md:gap-1.5 text-xs font-semibold text-neutral-900 dark:text-white mb-0.5">
+            <DollarSign className="size-4 md:size-3" strokeWidth={2.5} />
+             <span className="text-[10px] md:text-xs font-bold md:font-semibold uppercase md:normal-case">
+              {label ? 'Preco'  : 'Preco'}
+            </span>
           </span>
-          <span className={`text-xs truncate transition-colors ${
+          <span className={`hidden text-xs truncate md:block text-neutral-400 ${
             label ? 'text-neutral-800 dark:text-neutral-200 font-medium' : 'text-neutral-400'
           }`}>
             {label ?? 'Qualquer preço'}
