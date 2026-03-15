@@ -1,0 +1,1 @@
+export type ActiveField = 'location' | 'estadia' | 'preco' | null;

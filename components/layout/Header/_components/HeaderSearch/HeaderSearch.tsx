@@ -5,11 +5,14 @@ import LocationField from './LocationField';
 import StayField from './StayField';
 import PriceField from './PriceField';
 import SearchButton from './SearchButton';
+import {ActiveField} from "@/types/header"
 
-export type ActiveField = 'location' | 'estadia' | 'preco' | null;
 
 export default function HeaderSearch() {
   const [activeField, setActiveField] = useState<ActiveField>(null);
+  const [locationHover, setLocationHover] = useState(false);
+  const [stayHover, setStayHover] = useState(false);
+  const [priceHover, setPriceHover] = useState(false)
 
   const handleField = (field: ActiveField) => {
     setActiveField(prev => (prev === field ? null : field));
@@ -18,7 +21,7 @@ export default function HeaderSearch() {
   return (
     <div className="flex flex-col items-center w-full gap-3">
       <div
-        className={`flex items-stretch w-full max-w-2xl rounded-full border transition-all overflow-hidden
+        className={`flex items-stretch w-full max-w-xl rounded-full border transition-all overflow-hidden
         ${
           activeField
             ? 'border-neutral-300 dark:border-neutral-600 shadow-lg'
@@ -28,20 +31,23 @@ export default function HeaderSearch() {
         <LocationField
           active={activeField === 'location'}
           onClick={() => handleField('location')}
+          onHoverChange={setLocationHover}
         />
 
-        <Divider />
+        {!(locationHover || stayHover) && <Divider />}
 
         <StayField
           active={activeField === 'estadia'}
           onClick={() => handleField('estadia')}
+          onHoverChange={setStayHover}
         />
 
-        <Divider />
+        {!(stayHover || priceHover) && <Divider />}
 
         <PriceField
           active={activeField === 'preco'}
           onClick={() => handleField('preco')}
+          onHoverChange={setPriceHover}
         />
 
         <SearchButton activeField={activeField} />

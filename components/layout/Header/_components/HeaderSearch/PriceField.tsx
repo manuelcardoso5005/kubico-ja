@@ -3,15 +3,23 @@
 import { DollarSign } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function PriceField({ active, onClick }: any) {
+type Props = {
+  active: boolean
+  onClick: () => void
+  onHoverChange?: (hover: boolean) => void
+}
+
+export default function PriceField({ active, onClick, onHoverChange }: Props) {
   return (
     <button
       onClick={onClick}
+      onMouseEnter={() => onHoverChange?.(true)}
+      onMouseLeave={() => onHoverChange?.(false)}
       className={`flex flex-col justify-center px-5 py-3 text-left flex-1 rounded-full transition-colors
       ${
         active
           ? 'bg-neutral-50 dark:bg-neutral-800'
-          : 'hover:bg-neutral-50 dark:hover:bg-neutral-800'
+          : 'hover:bg-neutral-100 dark:hover:bg-neutral-800'
       }`}
     >
       <span className="flex items-center gap-1.5 text-xs font-semibold text-neutral-900 dark:text-white mb-0.5">
@@ -31,7 +39,7 @@ export default function PriceField({ active, onClick }: any) {
             exit={{ opacity: 0, height: 0 }}
             className="flex gap-1.5 mt-2"
           >
-            {['Até $50', '$50–200', '$200+'].map(opt => (
+            {['Até $50', '$50–200', '$200+'].map((opt) => (
               <button
                 key={opt}
                 onClick={(e) => e.stopPropagation()}
