@@ -3,7 +3,8 @@
     "login": "Entrar",
     "register": "Criar conta",
     "profile": "Perfil",
-    "logout": "Sair"
+    "logout": "Sair",
+    "settings": "Configurações"
   },
   "navigation": {
     "explore": "Explorar",
