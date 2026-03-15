@@ -4,21 +4,13 @@ import { useState, useRef, useEffect } from 'react';
 import { MapPin } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslations } from 'next-intl';
-
-const provinces = [
-  'Luanda', 'Bengo', 'Benguela', 'Bié', 'Cabinda',
-  'Cuando', 'Cubango', 'Cuanza Norte', 'Cuanza Sul', 'Cunene',
-  'Huambo', 'Huíla', 'Lunda Norte', 'Lunda Sul', 'Malanje',
-  'Moxico', 'Namibe', 'Uíge', 'Zaire'
-];
+import { provinces } from '@/data/constants';
 
 export default function LocationField({ active, onClick, onHoverChange, onProvinceSelect, onClose }: any) {
   const [province, setProvince] = useState<string | null>(null);
   const ref = useRef<HTMLDivElement>(null);
   const t = useTranslations('header');
   
-  
-
 useEffect(() => {
   if (!active) return;
 

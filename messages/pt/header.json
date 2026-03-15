@@ -15,6 +15,15 @@
     "location": "Destino",
     "stay": "Estadia",
     "price": "Preço",
-    "where": "Para onde?"
+    "where": "Para onde?",
+    "add_dates": "Adicionar datas",
+    "fast":"Rápido",
+    "datas":"Datas",
+    "weekend":"Fim de semana",
+    "week":"Semana",
+    "month":"Mês",
+    "check_in":"Chegada",
+    "check_out":"Saída",
+    "confirm":"Confirmar"
   }
 }

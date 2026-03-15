@@ -1,4 +1,5 @@
 'use client';
+import { useTranslations } from 'next-intl';
 import { DateRange } from '@/types/header';
 
 type Props = {
@@ -15,6 +16,7 @@ const addDays = (date: string, n: number) => {
 };
 
 export default function CustomDates({ draft, setDraft, onConfirm }: Props) {
+  const t = useTranslations('header');
   const from = draft.from;
   const to = draft.to;
 
@@ -22,7 +24,7 @@ export default function CustomDates({ draft, setDraft, onConfirm }: Props) {
     <div className="flex flex-col gap-3 p-4">
       <div className="grid grid-cols-2 gap-2">
         <div className="flex flex-col gap-1">
-          <label className="text-[10px] font-semibold uppercase tracking-wide text-neutral-400">Chegada</label>
+          <label className="text-[10px] font-semibold uppercase tracking-wide text-neutral-400">{t('filter.check_in')}</label>
           <input
             type="date"
             min={today()}
@@ -36,7 +38,7 @@ export default function CustomDates({ draft, setDraft, onConfirm }: Props) {
         </div>
 
         <div className="flex flex-col gap-1">
-          <label className="text-[10px] font-semibold uppercase tracking-wide text-neutral-400">Saída</label>
+          <label className="text-[10px] font-semibold uppercase tracking-wide text-neutral-400">{t('filter.check_out')}</label>
           <input
             type="date"
             min={from ? addDays(from, 1) : today()}
@@ -52,7 +54,7 @@ export default function CustomDates({ draft, setDraft, onConfirm }: Props) {
         disabled={!from || !to || from > to}
         className="w-full py-2.5 rounded-xl text-sm font-semibold bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 hover:bg-neutral-700 dark:hover:bg-neutral-200 disabled:opacity-40 disabled:cursor-not-allowed transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400"
       >
-        Confirmar
+        {t('filter.confirm')}
       </button>
     </div>
   );

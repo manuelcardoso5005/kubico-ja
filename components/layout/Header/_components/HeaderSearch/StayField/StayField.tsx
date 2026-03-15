@@ -6,13 +6,25 @@ import { QuickOption, Selection } from '@/types/header';
 import QuickOptions from './QuickOptions';
 import CustomDates from './CustomDates';
 import { QUICK_OPTIONS } from '@/data/constants';
-
+import { useTranslations } from 'next-intl';
 
 const today = () => new Date().toISOString().split('T')[0];
 const addDays = (date: string, n: number) => {
   const d = new Date(date);
   d.setDate(d.getDate() + n);
   return d.toISOString().split('T')[0];
+};
+
+// Formata "2026-03-24" => "24-Mar-26"
+const formatDate = (isoDate: string) => {
+  if (!isoDate) return '';
+  const d = new Date(isoDate);
+  const day = d.getDate().toString().padStart(2, '0');
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const month = monthNames[d.getMonth()];
+  const year = d.getFullYear().toString().slice(-2);
+  return `${day}-${month}-${year}`;
 };
 
 type Props = {
@@ -24,6 +36,7 @@ type Props = {
 };
 
 export default function StayField({ active, onClick, onHoverChange, onChange, onClose }: Props) {
+  const t = useTranslations('header');
   const id = useId();
   const ref = useRef<HTMLDivElement>(null);
   const [tab, setTab] = useState<'quick' | 'custom'>('quick');
@@ -73,10 +86,10 @@ export default function StayField({ active, onClick, onHoverChange, onChange, on
   };
 
   const label = selection
-    ? selection.kind === 'quick'
-      ? selection.option.label
-      : `${draft.from} – ${draft.to}`
-    : null;
+  ? selection.kind === 'quick'
+    ? selection.option.label
+    : `${formatDate(draft.from)} – ${formatDate(draft.to)}`
+  : null;
 
   return (
     <div ref={ref} className="relative flex-[1.4]">
@@ -92,21 +105,31 @@ export default function StayField({ active, onClick, onHoverChange, onChange, on
           ${active ? 'bg-neutral-50 dark:bg-neutral-800' : 'hover:bg-neutral-100 dark:hover:bg-neutral-800'}`}
       >
         <span className="flex flex-col min-w-0">
-          <span className="flex items-center gap-1.5 text-xs font-semibold text-neutral-900 dark:text-white mb-0.5">
-            <Calendar size={12} strokeWidth={2} aria-hidden />
-            Estadia
+          <span className="flex flex-col items-center justify-center gap-0.5 md:flex-row md:items-center md:justify-start md:gap-1.5 text-xs font-semibold text-neutral-900 dark:text-white mb-0.5">
+            <Calendar className="size-4 md:size-3" strokeWidth={2.5} />
+             <span className="text-[10px] md:text-xs font-bold md:font-semibold uppercase md:normal-case">
+              {label ? t('filter.stay')  : t('filter.stay')}
           </span>
-          <span className={`text-xs truncate ${label ? 'text-neutral-800 dark:text-neutral-200 font-medium' : 'text-neutral-400'}`}>
-            {label ?? 'Adicionar datas'}
+          </span>
+          <span className={`hidden md:block text-xs truncate ${label ? 'text-neutral-800 dark:text-neutral-200 font-medium' : 'text-neutral-400'}`}>
+            {label ?? t('filter.add_dates')}
           </span>
         </span>
 
         <span className="flex items-center gap-1 ml-2 shrink-0">
-          {label && (
-            <span onClick={clear} className="flex items-center justify-center w-4 h-4 rounded-full bg-neutral-300 dark:bg-neutral-600 text-neutral-600 dark:text-neutral-300 text-[10px] leading-none cursor-pointer hover:bg-neutral-400 dark:hover:bg-neutral-500 transition-colors">
-              ×
-            </span>
-          )}
+            {label && (
+              <span
+                onClick={clear}
+                className="flex items-center justify-center w-4 h-4 rounded-full
+                  bg-neutral-500 dark:bg-neutral-400
+                  text-white dark:text-neutral-900
+                  text-[11px] font-bold leading-none cursor-pointer
+                  hover:bg-neutral-700 dark:hover:bg-neutral-200
+                  transition-colors"
+              >
+                ×
+              </span>
+            )}
           <ChevronDown size={12} strokeWidth={2} aria-hidden className={`${active ? 'rotate-180' : ''} text-neutral-400 transition-transform`} />
         </span>
       </button>
@@ -125,20 +148,20 @@ export default function StayField({ active, onClick, onHoverChange, onChange, on
           >
             {/* Tab bar */}
             <div role="tablist" className="flex border-b border-neutral-100 dark:border-neutral-800">
-              {(['quick', 'custom'] as const).map((t) => (
+              {(['quick', 'custom'] as const).map((tabItem) => ( 
                 <button
-                  key={t}
+                  key={tabItem}
                   role="tab"
-                  aria-selected={tab === t}
-                  aria-controls={`${id}-tab-${t}`}
-                  id={`${id}-tab-btn-${t}`}
-                  onClick={() => setTab(t)}
+                  aria-selected={tab === tabItem}
+                  onClick={() => setTab(tabItem)}
                   className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-semibold transition-colors
-                    ${tab === t ? 'text-neutral-900 dark:text-white border-b-2 border-neutral-900 dark:border-white -mb-px' : 'text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300'}
-                  `}
+                    ${tab === tabItem
+                      ? 'text-neutral-900 dark:text-white border-b-2 border-neutral-900 dark:border-white -mb-px'
+                      : 'text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300'
+                    }`}
                 >
-                  {t === 'quick' ? <Clock size={11} aria-hidden /> : <Calendar size={11} aria-hidden />}
-                  {t === 'quick' ? 'Rápido' : 'Datas'}
+                  {tabItem === 'quick' ? <Clock size={11} aria-hidden /> : <Calendar size={11} aria-hidden />}
+                  {tabItem === 'quick' ? t('filter.fast') : t('filter.datas')}
                 </button>
               ))}
             </div>

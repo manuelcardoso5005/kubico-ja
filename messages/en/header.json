@@ -15,6 +15,15 @@
     "location": "Location",
     "stay": "Stay",
     "price": "Price",
-    "where": "Where are you going?"
+    "where": "Where are you going?",
+    "add_dates": "Add dates",
+    "fast":"Fast",
+    "datas":"Datas",
+    "weekend":"Weekend",
+    "week":"Week",
+    "month":"Month",
+    "check_in":"Check-in",
+    "check_out":"Check-out",
+    "confirm":"Confirm"
   }
 }
