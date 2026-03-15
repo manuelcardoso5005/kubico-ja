@@ -1,28 +1,84 @@
 'use client';
 
+import { useState, useRef, useEffect } from 'react';
 import { MapPin } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-export default function LocationField({ active, onClick, onHoverChange }: any) {
+const provinces = [
+  'Luanda', 'Bengo', 'Benguela', 'Bié', 'Cabinda',
+  'Cuando', 'Cubango', 'Cuanza Norte', 'Cuanza Sul', 'Cunene',
+  'Huambo', 'Huíla', 'Lunda Norte', 'Lunda Sul', 'Malanje',
+  'Moxico', 'Namibe', 'Uíge', 'Zaire'
+];
+
+export default function LocationField({ active, onClick, onHoverChange, onProvinceSelect, onClose }: any) {
+  const [province, setProvince] = useState<string | null>(null);
+  const ref = useRef<HTMLDivElement>(null);
+
+  // Fecha dropdown ao clicar fora
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        onClose?.();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [onClose]);
+
+  const handleSelect = (p: string) => {
+    setProvince(p);
+    onProvinceSelect?.(p); // envia para o HeaderSearch
+    onClose?.(); // fecha dropdown
+  };
+
   return (
-    <button
-      onClick={onClick}
-      onMouseEnter={() => onHoverChange?.(true)}
-      onMouseLeave={() => onHoverChange?.(false)}
-      className={`flex flex-col justify-center px-5 py-3 text-left flex-[1.4] rounded-full transition-colors
-      ${
-        active
-          ? 'bg-neutral-50 dark:bg-neutral-800'
-          : 'hover:bg-neutral-100 dark:hover:bg-neutral-800'
-      }`}
-    >
-      <span className="flex items-center gap-1.5 text-xs font-semibold text-neutral-900 dark:text-white mb-0.5">
-        <MapPin size={12} strokeWidth={2} />
-        Destino
-      </span>
+    <div ref={ref} className="relative flex-[1.4]">
+      <button
+        onClick={onClick}
+        onMouseEnter={() => onHoverChange?.(true)}
+        onMouseLeave={() => onHoverChange?.(false)}
+        className={`w-full flex flex-col justify-center px-5 py-3 text-left rounded-full transition-colors
+          ${active ? 'bg-neutral-100 dark:bg-neutral-800' : 'hover:bg-neutral-100 dark:hover:bg-neutral-800'}`}
+      >
+        <span className="flex flex-col items-center justify-center gap-0.5 md:flex-row md:items-center md:justify-start md:gap-1.5 text-xs font-semibold text-neutral-900 dark:text-white mb-0.5">
+          <MapPin className="size-4 md:size-3" strokeWidth={2.5} />
+          <span className="text-[10px] md:text-xs font-bold md:font-semibold uppercase md:normal-case">
+            Destino
+          </span>
+        </span>
+        <span className="hidden text-xs truncate md:block text-neutral-400">
+          {province ?? 'Para onde?'}
+        </span>
+      </button>
 
-      <span className="text-xs truncate text-neutral-400">
-        Para onde?
-      </span>
-    </button>
+      <AnimatePresence>
+        {active && (
+          <motion.div
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.15 }}
+            className="absolute left-0 z-50 w-64 mt-2 overflow-hidden bg-white border shadow-lg dark:bg-neutral-900 border-neutral-200 dark:border-neutral-700 rounded-xl"
+          >
+            <ul className="overflow-y-auto max-h-72">
+              {provinces.map((p) => (
+                <li key={p}>
+                  <button
+                    onClick={() => handleSelect(p)}
+                    className="w-full px-4 py-2 text-sm text-left transition-colors text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+                  >
+                    {p}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }

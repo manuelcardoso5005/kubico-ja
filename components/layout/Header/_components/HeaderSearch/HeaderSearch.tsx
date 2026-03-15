@@ -13,6 +13,16 @@ export default function HeaderSearch() {
   const [locationHover, setLocationHover] = useState(false);
   const [stayHover, setStayHover] = useState(false);
   const [priceHover, setPriceHover] = useState(false)
+  const hideFirstDivider =
+  locationHover ||
+  stayHover ||
+  activeField === 'location' ||
+  activeField === 'estadia';
+  const hideSecondDivider =
+  stayHover ||
+  priceHover ||
+  activeField === 'estadia' ||
+  activeField === 'preco';
 
   const handleField = (field: ActiveField) => {
     setActiveField(prev => (prev === field ? null : field));
@@ -21,7 +31,7 @@ export default function HeaderSearch() {
   return (
     <div className="flex flex-col items-center w-full gap-3">
       <div
-        className={`flex items-stretch w-full max-w-xl rounded-full border transition-all overflow-hidden
+        className={`flex items-stretch w-full max-w-xl rounded-full border transition-all overflow-visible
         ${
           activeField
             ? 'border-neutral-300 dark:border-neutral-600 shadow-lg'
@@ -29,12 +39,14 @@ export default function HeaderSearch() {
         } bg-white dark:bg-neutral-900`}
       >
         <LocationField
-          active={activeField === 'location'}
-          onClick={() => handleField('location')}
-          onHoverChange={setLocationHover}
-        />
+  active={activeField === 'location'}
+  onClick={() => handleField('location')}
+  onHoverChange={setLocationHover}
+  onProvinceSelect={(p:any) => console.log('Província escolhida:', p)}
+  onClose={() => setActiveField(null)}
+/>
 
-        {!(locationHover || stayHover) && <Divider />}
+        {!hideFirstDivider && <Divider />}
 
         <StayField
           active={activeField === 'estadia'}
@@ -42,7 +54,7 @@ export default function HeaderSearch() {
           onHoverChange={setStayHover}
         />
 
-        {!(stayHover || priceHover) && <Divider />}
+        {!hideSecondDivider && <Divider />}
 
         <PriceField
           active={activeField === 'preco'}
