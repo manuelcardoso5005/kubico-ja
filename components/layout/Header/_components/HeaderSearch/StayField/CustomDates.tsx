@@ -22,7 +22,7 @@ export default function CustomDates({ draft, setDraft, onConfirm }: Props) {
 
   return (
     <div className="flex flex-col gap-3 p-4">
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
         <div className="flex flex-col gap-1">
           <label className="text-[10px] font-semibold uppercase tracking-wide text-neutral-400">{t('filter.check_in')}</label>
           <input

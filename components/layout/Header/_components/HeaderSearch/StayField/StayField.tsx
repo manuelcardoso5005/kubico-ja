@@ -144,7 +144,7 @@ export default function StayField({ active, onClick, onHoverChange, onChange, on
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.98 }}
             transition={{ duration: 0.15, ease: 'easeOut' }}
-            className="absolute left-0 z-50 mt-2 overflow-hidden bg-white border shadow-xl w-72 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-700 rounded-2xl"
+            className="absolute left-0 z-50 mt-2 overflow-hidden bg-white border shadow-xl w-[calc(100vw-2rem)] max-w-72 sm:w-72 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-700 rounded-2xl"
           >
             {/* Tab bar */}
             <div role="tablist" className="flex border-b border-neutral-100 dark:border-neutral-800">

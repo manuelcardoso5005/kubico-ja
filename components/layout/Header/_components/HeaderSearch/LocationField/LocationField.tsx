@@ -28,8 +28,8 @@ useEffect(() => {
 
   const handleSelect = (p: string) => {
     setProvince(p);
-    onProvinceSelect?.(p); // envia para o HeaderSearch
-    onClose?.(); // fecha dropdown
+    onProvinceSelect?.(p);
+    onClose?.();
   };
 
   return (
