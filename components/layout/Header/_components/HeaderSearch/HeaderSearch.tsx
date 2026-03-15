@@ -53,7 +53,7 @@ export default function HeaderSearch() {
           onClick={() => handleField('estadia')}
           onHoverChange={setStayHover}
           onChange={(selection) => console.log('Estadia:', selection)}
-          
+          onClose={() => setActiveField(null)}
         />
 
         {!hideSecondDivider && <Divider />}

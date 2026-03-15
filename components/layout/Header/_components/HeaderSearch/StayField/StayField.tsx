@@ -5,12 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { QuickOption, Selection } from '@/types/header';
 import QuickOptions from './QuickOptions';
 import CustomDates from './CustomDates';
+import { QUICK_OPTIONS } from '@/data/constants';
 
-const QUICK_OPTIONS: QuickOption[] = [
-  { label: 'Fim de semana', days: 2 },
-  { label: '1 semana', days: 7 },
-  { label: '1 mês', days: 30 },
-];
 
 const today = () => new Date().toISOString().split('T')[0];
 const addDays = (date: string, n: number) => {
@@ -36,18 +32,25 @@ export default function StayField({ active, onClick, onHoverChange, onChange, on
 
   // Close on outside click or Escape
   useEffect(() => {
-    if (!active) return;
-    const handle = (e: MouseEvent | KeyboardEvent) => {
-      if ('key' in e && e.key === 'Escape') return onClose?.();
-      if (ref.current && !(e.target instanceof Node && ref.current.contains(e.target))) onClose?.();
-    };
-    document.addEventListener('mousedown', handle);
-    document.addEventListener('keydown', handle);
-    return () => {
-      document.removeEventListener('mousedown', handle);
-      document.removeEventListener('keydown', handle);
-    };
-  }, [active, onClose]);
+  if (!active) return;
+
+  const handleClickOutside = (e: MouseEvent) => {
+    if (ref.current && !ref.current.contains(e.target as Node)) {
+      onClose?.(); // fecha só se clicares fora
+    }
+  };
+
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === 'Escape') onClose?.();
+  };
+
+  document.addEventListener('mousedown', handleClickOutside);
+  document.addEventListener('keydown', handleKeyDown);
+  return () => {
+    document.removeEventListener('mousedown', handleClickOutside);
+    document.removeEventListener('keydown', handleKeyDown);
+  };
+}, [active, onClose]);
 
   const selectQuick = (opt: QuickOption) => {
     const next: Selection = { kind: 'quick', option: opt };
