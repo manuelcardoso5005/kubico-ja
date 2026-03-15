@@ -101,7 +101,7 @@ export default function StayField({ active, onClick, onHoverChange, onChange, on
         onClick={onClick}
         onMouseEnter={() => onHoverChange?.(true)}
         onMouseLeave={() => onHoverChange?.(false)}
-        className={`group w-full flex items-center justify-between px-5 py-3 rounded-full transition-colors text-left
+        className={`group w-full flex items-center justify-center md:justify-between px-5 py-3 rounded-full transition-colors text-left
           ${active ? 'bg-neutral-50 dark:bg-neutral-800' : 'hover:bg-neutral-100 dark:hover:bg-neutral-800'}`}
       >
         <span className="flex flex-col min-w-0">
@@ -109,7 +109,7 @@ export default function StayField({ active, onClick, onHoverChange, onChange, on
             <Calendar className="size-4 md:size-3" strokeWidth={2.5} />
              <span className="text-[10px] md:text-xs font-bold md:font-semibold uppercase md:normal-case">
               {label ? t('filter.stay')  : t('filter.stay')}
-          </span>
+            </span>
           </span>
           <span className={`hidden md:block text-xs truncate ${label ? 'text-neutral-800 dark:text-neutral-200 font-medium' : 'text-neutral-400'}`}>
             {label ?? t('filter.add_dates')}
@@ -144,7 +144,7 @@ export default function StayField({ active, onClick, onHoverChange, onChange, on
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.98 }}
             transition={{ duration: 0.15, ease: 'easeOut' }}
-            className="absolute left-0 z-50 mt-2 overflow-hidden bg-white border shadow-xl w-[calc(100vw-2rem)] max-w-72 sm:w-72 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-700 rounded-2xl"
+            className="absolute right-0 md:left-0 z-50 mt-2 overflow-hidden bg-white border shadow-xl w-[calc(100vw-2rem)] max-w-60 md:max-w-80 sm:w-72 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-700 rounded-2xl"
           >
             {/* Tab bar */}
             <div role="tablist" className="flex border-b border-neutral-100 dark:border-neutral-800">
