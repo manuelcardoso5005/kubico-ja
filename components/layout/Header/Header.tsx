@@ -5,7 +5,7 @@ import ThemeToggle from './_components/ThemeToggle';
 import HeaderLogo from './_components/HeaderLogo';
 import Navbar from './_components/Navbar';
 import HeaderMenu from './_components/HeaderMenu';
-import HeaderSearch from './_components/HeaderSearch';
+import HeaderSearch from './_components/HeaderSearch/HeaderSearch';
 
 export default function HeaderPage() {
   return (
