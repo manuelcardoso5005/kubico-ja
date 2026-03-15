@@ -16,27 +16,25 @@ export default function Navbar() {
 
   return (
     <nav className="hidden md:block">
-      <ul className="flex items-center gap-1 m-0 list-none">
+      <ul className="flex items-center gap-1 p-1 m-0 list-none rounded-full bg-neutral-100 dark:bg-neutral-800">
         {navLinks.map(({ href, key }) => {
           const isActive = pathname === href;
           return (
             <li key={href}>
               <Link
                 href={href}
-                className={`relative flex items-center px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200
-                    ${isActive
-                    ? 'text-neutral-900 dark:text-white'
-                    : 'text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-200 dark:hover:bg-neutral-800'
-                    }`}
-                >
+                className="relative flex items-center px-5 py-1.5 rounded-full text-sm font-medium cursor-pointer transition-colors"
+              >
                 {isActive && (
                   <motion.span
                     layoutId="nav-pill"
-                    className="absolute inset-0 rounded-full bg-neutral-100 dark:bg-neutral-800"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    className="absolute inset-0 bg-white rounded-full shadow-sm dark:bg-neutral-900"
+                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                   />
                 )}
-                <span className="relative z-10">{t(key)}</span>
+                <span className={`relative z-10 transition-colors ${isActive ? 'text-neutral-900 dark:text-white' : 'text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white'}`}>
+                  {t(key)}
+                </span>
               </Link>
             </li>
           );
