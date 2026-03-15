@@ -10,5 +10,11 @@
     "explore": "Explore",
     "homes": "Homes",
     "vacation": "Vacation"
+  },
+  "filter":{
+    "location": "Location",
+    "stay": "Stay",
+    "price": "Price",
+    "where": "Where are you going?"
   }
 }

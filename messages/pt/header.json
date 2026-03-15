@@ -10,5 +10,11 @@
     "explore": "Experiências",
     "homes": "Casas",
     "vacation": "Férias"
+  },
+  "filter":{
+    "location": "Destino",
+    "stay": "Estadia",
+    "price": "Preço",
+    "where": "Para onde?"
   }
 }

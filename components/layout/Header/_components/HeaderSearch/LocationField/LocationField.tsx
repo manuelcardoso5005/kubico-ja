@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { MapPin } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 
 const provinces = [
   'Luanda', 'Bengo', 'Benguela', 'Bié', 'Cabinda',
@@ -14,20 +15,24 @@ const provinces = [
 export default function LocationField({ active, onClick, onHoverChange, onProvinceSelect, onClose }: any) {
   const [province, setProvince] = useState<string | null>(null);
   const ref = useRef<HTMLDivElement>(null);
+  const t = useTranslations('header');
+  
+  
 
-  // Fecha dropdown ao clicar fora
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (ref.current && !ref.current.contains(event.target as Node)) {
-        onClose?.();
-      }
-    };
+useEffect(() => {
+  if (!active) return;
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [onClose]);
+  const handleClickOutside = (e: MouseEvent) => {
+    const target = e.target as Node;
+    // Se o clique foi fora do dropdown, fecha
+    if (ref.current && !ref.current.contains(target)) {
+      onClose?.();
+    }
+  };
+
+  document.addEventListener('mousedown', handleClickOutside);
+  return () => document.removeEventListener('mousedown', handleClickOutside);
+}, [active, onClose]);
 
   const handleSelect = (p: string) => {
     setProvince(p);
@@ -47,11 +52,11 @@ export default function LocationField({ active, onClick, onHoverChange, onProvin
         <span className="flex flex-col items-center justify-center gap-0.5 md:flex-row md:items-center md:justify-start md:gap-1.5 text-xs font-semibold text-neutral-900 dark:text-white mb-0.5">
           <MapPin className="size-4 md:size-3" strokeWidth={2.5} />
           <span className="text-[10px] md:text-xs font-bold md:font-semibold uppercase md:normal-case">
-            Destino
+            {province ? t('filter.location') : t('filter.location')}
           </span>
         </span>
         <span className="hidden text-xs truncate md:block text-neutral-400">
-          {province ?? 'Para onde?'}
+          {province ?? t('filter.where')}
         </span>
       </button>
 

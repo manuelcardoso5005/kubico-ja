@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import LocationField from './LocationField';
-import StayField from './StayField';
-import PriceField from './PriceField';
+import LocationField from './LocationField/LocationField';
+import StayField from './StayField/StayField';
+import PriceField from './PriceField/PriceField';
 import SearchButton from './SearchButton';
 import {ActiveField} from "@/types/header"
 
@@ -39,12 +39,12 @@ export default function HeaderSearch() {
         } bg-white dark:bg-neutral-900`}
       >
         <LocationField
-  active={activeField === 'location'}
-  onClick={() => handleField('location')}
-  onHoverChange={setLocationHover}
-  onProvinceSelect={(p:any) => console.log('Província escolhida:', p)}
-  onClose={() => setActiveField(null)}
-/>
+          active={activeField === 'location'}
+          onClick={() => handleField('location')}
+          onHoverChange={setLocationHover}
+          onProvinceSelect={(p:any) => console.log('Província escolhida:', p)}
+          onClose={() => setActiveField(null)}
+        />
 
         {!hideFirstDivider && <Divider />}
 
@@ -52,6 +52,8 @@ export default function HeaderSearch() {
           active={activeField === 'estadia'}
           onClick={() => handleField('estadia')}
           onHoverChange={setStayHover}
+          onChange={(selection) => console.log('Estadia:', selection)}
+          
         />
 
         {!hideSecondDivider && <Divider />}
