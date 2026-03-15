@@ -1,0 +1,13 @@
+{
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+  "navigation": {
+    "explore": "Explore",
+    "homes": "Homes",
+    "vacation": "Vacation"
+  }
+}

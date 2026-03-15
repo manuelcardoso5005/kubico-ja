@@ -1,0 +1,13 @@
+{
+  "auth": {
+    "login": "Entrar",
+    "register": "Criar conta",
+    "profile": "Perfil",
+    "logout": "Sair"
+  },
+  "navigation": {
+    "explore": "Explorar",
+    "homes": "Imóveis",
+    "vacation": "Férias"
+  }
+}
