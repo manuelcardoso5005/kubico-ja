@@ -17,13 +17,22 @@
     "price": "Price",
     "where": "Where are you going?",
     "add_dates": "Add dates",
-    "fast":"Fast",
+    "quick":"Fast",
     "datas":"Datas",
+    "range":"Range",
     "weekend":"Weekend",
     "week":"Week",
     "month":"Month",
     "check_in":"Check-in",
     "check_out":"Check-out",
-    "confirm":"Confirm"
+    "confirm":"Confirm",
+    "any_price":"Any price",
+    "max_price":"Max price",
+    "min_price":"Min price",
+    "search":"Search",
+    "to":"To",
+    "low":"Up to 5 000 Kz",
+    "medium":"5 000–15 000 Kz",
+    "high":"15 000 Kz+"
   }
 }

@@ -161,7 +161,7 @@ export default function StayField({ active, onClick, onHoverChange, onChange, on
                     }`}
                 >
                   {tabItem === 'quick' ? <Clock size={11} aria-hidden /> : <Calendar size={11} aria-hidden />}
-                  {tabItem === 'quick' ? t('filter.fast') : t('filter.datas')}
+                  {tabItem === 'quick' ? t('filter.quick') : t('filter.datas')}
                 </button>
               ))}
             </div>

@@ -62,6 +62,8 @@ export default function HeaderSearch() {
           active={activeField === 'preco'}
           onClick={() => handleField('preco')}
           onHoverChange={setPriceHover}
+          onChange={(selection) => console.log('Preço:', selection)}
+          onClose={() => setActiveField(null)}
         />
 
         <SearchButton activeField={activeField} />

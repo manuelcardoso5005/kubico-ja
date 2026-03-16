@@ -12,3 +12,15 @@ export const provinces = [
   'Huambo', 'Huíla', 'Lunda Norte', 'Lunda Sul', 'Malanje',
   'Moxico', 'Namibe', 'Uíge', 'Zaire'
 ];
+
+import { QuickPrice } from "@/types/header";
+
+export const QUICK_OPTIONS_: QuickPrice[] = [
+  { label: 'Até 5 000 Kz', max: 5_000, key: 'filter.low' },
+  { label: '5 000–15 000 Kz', max: 15_000, key: 'filter.medium' },
+  { label: '15 000 Kz+', max: 999_999, key: 'filter.high' },
+];
+
+export const MIN = 0;
+export const MAX = 50_000;
+export const STEP = 500;

@@ -4,14 +4,11 @@ import { DollarSign, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRef, useEffect, useId, useState } from 'react';
 
-// ─── Types ────────────────────────────────────────────────────────────────────
-
-type QuickPrice = { label: string; max: number };
-type PriceRange = { min: number; max: number };
-type PriceSelection =
-  | { kind: 'quick'; option: QuickPrice }
-  | { kind: 'range'; range: PriceRange }
-  | null;
+import { PriceRange, PriceSelection, QuickPrice } from '@/types/header';
+import { formatPrice } from './utils';
+import QuickTab from './QuickTab';
+import RangeTab from './RangeTab';
+import { useTranslations } from 'next-intl';
 
 type Props = {
   active: boolean;
@@ -21,33 +18,15 @@ type Props = {
   onClose?: () => void;
 };
 
-// ─── Constants ────────────────────────────────────────────────────────────────
-
-const QUICK_OPTIONS: QuickPrice[] = [
-  { label: 'Até 5 000 Kz',    max: 5_000  },
-  { label: '5 000–15 000 Kz', max: 15_000 },
-  { label: '15 000 Kz+',      max: 999_999 },
-];
-
-const MIN = 0;
-const MAX = 50_000;
-const STEP = 500;
-
-const fmt = (n: number) =>
-  n >= 999_999
-    ? 'Sem limite'
-    : n.toLocaleString('pt-AO') + ' Kz';
-
-// ─── Component ────────────────────────────────────────────────────────────────
-
 export default function PriceField({ active, onClick, onHoverChange, onChange, onClose }: Props) {
   const id  = useId();
   const ref = useRef<HTMLDivElement>(null);
+
   const [tab, setTab]             = useState<'quick' | 'range'>('quick');
   const [selection, setSelection] = useState<PriceSelection>(null);
   const [range, setRange]         = useState<PriceRange>({ min: 0, max: 20_000 });
+  const t = useTranslations('header');
 
-  // ── Close on outside click / Escape ──────────────────────────────────────
   useEffect(() => {
     if (!active) return;
     const handleMouse = (e: MouseEvent) => {
@@ -64,7 +43,6 @@ export default function PriceField({ active, onClick, onHoverChange, onChange, o
     };
   }, [active, onClose]);
 
-  // ── Handlers ─────────────────────────────────────────────────────────────
   const selectQuick = (opt: QuickPrice) => {
     const next: PriceSelection = { kind: 'quick', option: opt };
     setSelection(next);
@@ -85,16 +63,11 @@ export default function PriceField({ active, onClick, onHoverChange, onChange, o
     onChange?.(null);
   };
 
-  // ── Derived label ─────────────────────────────────────────────────────────
   const label = (() => {
     if (!selection) return null;
     if (selection.kind === 'quick') return selection.option.label;
-    return `${fmt(selection.range.min)} – ${fmt(selection.range.max)}`;
+    return `${formatPrice(selection.range.min)} – ${formatPrice(selection.range.max)}`;
   })();
-
-  // ── Range helpers ─────────────────────────────────────────────────────────
-  const minPct = ((range.min - MIN) / (MAX - MIN)) * 100;
-  const maxPct = ((range.max - MIN) / (MAX - MIN)) * 100;
 
   return (
     <div ref={ref} className="relative flex-1">
@@ -113,15 +86,13 @@ export default function PriceField({ active, onClick, onHoverChange, onChange, o
       >
         <span className="flex flex-col min-w-0">
           <span className="flex flex-col items-center justify-center gap-0.5 md:flex-row md:items-center md:justify-start md:gap-1.5 text-xs font-semibold text-neutral-900 dark:text-white mb-0.5">
-            <DollarSign className="size-4 md:size-3" strokeWidth={2.5} />
-             <span className="text-[10px] md:text-xs font-bold md:font-semibold uppercase md:normal-case">
-              {label ? 'Preco'  : 'Preco'}
-            </span>
+            <DollarSign className="size-4 md:size-3" aria-hidden />
+            <span className="text-[10px] md:text-xs font-bold md:font-semibold uppercase md:normal-case">{t('filter.price')}</span>
           </span>
-          <span className={`hidden text-xs truncate md:block text-neutral-400 ${
+          <span className={`hidden md:block text-xs truncate ${
             label ? 'text-neutral-800 dark:text-neutral-200 font-medium' : 'text-neutral-400'
           }`}>
-            {label ?? 'Qualquer preço'}
+            {label ?? t('filter.any_price')}
           </span>
         </span>
 
@@ -159,126 +130,35 @@ export default function PriceField({ active, onClick, onHoverChange, onChange, o
             className="absolute right-0 z-50 mt-2 overflow-hidden bg-white border shadow-xl w-72 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-700 rounded-2xl"
           >
             {/* Tab bar */}
-            <div role="tablist" className="flex border-b border-neutral-100 dark:border-neutral-800">
-              {(['quick', 'range'] as const).map((t) => (
+            <div
+              role="tablist"
+              className="flex border-b border-neutral-100 dark:border-neutral-800"
+            >
+              {(['quick', 'range'] as const).map((tabName) => (
                 <button
-                  key={t}
+                  key={tabName}
                   role="tab"
-                  aria-selected={tab === t}
-                  onClick={() => setTab(t)}
+                  aria-selected={tab === tabName}
+                  onClick={() => setTab(tabName)}
                   className={`flex-1 py-2.5 text-xs font-semibold transition-colors
-                    ${tab === t
-                      ? 'text-neutral-900 dark:text-white border-b-2 border-neutral-900 dark:border-white -mb-px'
-                      : 'text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300'}`}
+                    ${
+                      tab === tabName
+                        ? 'text-neutral-900 dark:text-white border-b-2 border-neutral-900 dark:border-white -mb-px'
+                        : 'text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300'
+                    }`}
                 >
-                  {t === 'quick' ? 'Rápido' : 'Intervalo'}
+                  {tabName === 'quick'
+                    ? t('filter.quick')
+                    : t('filter.range')}
                 </button>
               ))}
             </div>
 
-            {/* Quick tab */}
             {tab === 'quick' && (
-              <ul className="p-1.5 flex flex-col gap-0.5">
-                {QUICK_OPTIONS.map((opt) => {
-                  const selected = selection?.kind === 'quick' && selection.option.label === opt.label;
-                  return (
-                    <li key={opt.label}>
-                      <button
-                        onClick={() => selectQuick(opt)}
-                        className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm transition-colors
-                          ${selected
-                            ? 'bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 font-medium'
-                            : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800'}`}
-                      >
-                        <span>{opt.label}</span>
-                        {selected && (
-                          <span className="text-[10px] text-neutral-400 dark:text-neutral-600">✓</span>
-                        )}
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
+              <QuickTab selection={selection} onSelect={selectQuick} />
             )}
-
-            {/* Range tab */}
             {tab === 'range' && (
-              <div className="flex flex-col gap-4 p-4">
-
-                {/* Price display */}
-                <div className="flex items-center justify-between">
-                  <div className="flex flex-col">
-                    <span className="text-[10px] font-semibold uppercase tracking-wide text-neutral-400">Mínimo</span>
-                    <span className="text-sm font-semibold text-neutral-900 dark:text-white">{fmt(range.min)}</span>
-                  </div>
-                  <div className="w-px h-6 bg-neutral-200 dark:bg-neutral-700" />
-                  <div className="flex flex-col items-end">
-                    <span className="text-[10px] font-semibold uppercase tracking-wide text-neutral-400">Máximo</span>
-                    <span className="text-sm font-semibold text-neutral-900 dark:text-white">{fmt(range.max)}</span>
-                  </div>
-                </div>
-
-                {/* Dual range track */}
-                <div className="relative flex items-center h-5">
-                  {/* Track base */}
-                  <div className="absolute inset-x-0 h-1 rounded-full bg-neutral-200 dark:bg-neutral-700" />
-
-                  {/* Active segment */}
-                  <div
-                    className="absolute h-1 rounded-full bg-neutral-900 dark:bg-white"
-                    style={{ left: `${minPct}%`, right: `${100 - maxPct}%` }}
-                  />
-
-                  {/* Min thumb */}
-                  <input
-                    type="range"
-                    min={MIN} max={MAX} step={STEP}
-                    value={range.min}
-                    onChange={(e) => {
-                      const v = Number(e.target.value);
-                      if (v < range.max) setRange((r) => ({ ...r, min: v }));
-                    }}
-                    className="absolute inset-0 w-full h-5 opacity-0 cursor-pointer"
-                    style={{ zIndex: range.min > MAX - STEP * 5 ? 5 : 3 }}
-                    aria-label="Preço mínimo"
-                  />
-
-                  {/* Max thumb */}
-                  <input
-                    type="range"
-                    min={MIN} max={MAX} step={STEP}
-                    value={range.max}
-                    onChange={(e) => {
-                      const v = Number(e.target.value);
-                      if (v > range.min) setRange((r) => ({ ...r, max: v }));
-                    }}
-                    className="absolute inset-0 w-full h-5 opacity-0 cursor-pointer"
-                    style={{ zIndex: 4 }}
-                    aria-label="Preço máximo"
-                  />
-
-                  {/* Visual thumbs */}
-                  <div
-                    className="absolute w-4 h-4 bg-white border-2 rounded-full shadow pointer-events-none dark:bg-neutral-900 border-neutral-900 dark:border-white"
-                    style={{ left: `calc(${minPct}% - 8px)` }}
-                  />
-                  <div
-                    className="absolute w-4 h-4 bg-white border-2 rounded-full shadow pointer-events-none dark:bg-neutral-900 border-neutral-900 dark:border-white"
-                    style={{ left: `calc(${maxPct}% - 8px)` }}
-                  />
-                </div>
-
-                {/* Confirm */}
-                <button
-                  onClick={confirmRange}
-                  className="w-full py-2.5 rounded-xl text-sm font-semibold
-                    bg-neutral-900 dark:bg-white text-white dark:text-neutral-900
-                    hover:bg-neutral-700 dark:hover:bg-neutral-200
-                    transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400"
-                >
-                  Confirmar
-                </button>
-              </div>
+              <RangeTab range={range} setRange={setRange} onConfirm={confirmRange} />
             )}
           </motion.div>
         )}

@@ -17,13 +17,23 @@
     "price": "Preço",
     "where": "Para onde?",
     "add_dates": "Adicionar datas",
-    "fast":"Rápido",
+    "quick":"Rápido",
     "datas":"Datas",
+    "range":"Intervalo",
     "weekend":"Fim de semana",
     "week":"Semana",
     "month":"Mês",
     "check_in":"Chegada",
     "check_out":"Saída",
-    "confirm":"Confirmar"
+    "confirm":"Confirmar",
+    "any_price":"Qualquer preço",
+    "max_price":"Máximo",
+    "min_price":"Mínimo",
+    "search":"Pesquisar",
+    "from":"De",
+    "to":"Até",
+    "low":"Até 5 000 Kz",
+    "medium":"5 000–15 000 Kz",
+    "high":"15 000 Kz+"
   }
 }
