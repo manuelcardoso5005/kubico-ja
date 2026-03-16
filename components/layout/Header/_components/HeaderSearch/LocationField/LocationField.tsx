@@ -59,7 +59,7 @@ useEffect(() => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.15 }}
-            className="absolute left-0 z-50 w-64 mt-2 overflow-hidden bg-white border shadow-lg dark:bg-neutral-900 border-neutral-200 dark:border-neutral-700 rounded-xl"
+            className="absolute left-0 w-64 mt-2 overflow-hidden bg-white border shadow-lg z-100 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-700 rounded-xl"
           >
             <ul className="overflow-y-auto max-h-72">
               {provinces.map((p) => (
