@@ -7,8 +7,10 @@ import PriceField from './PriceField/PriceField';
 import SearchButton from './SearchButton';
 import {ActiveField} from "@/types/header"
 
+type Props = { compact?: boolean };
 
-export default function HeaderSearch() {
+
+export default function HeaderSearch({ compact = false }: Props) {
   const [activeField, setActiveField] = useState<ActiveField>(null);
   const [locationHover, setLocationHover] = useState(false);
   const [stayHover, setStayHover] = useState(false);
@@ -29,14 +31,12 @@ export default function HeaderSearch() {
   };
 
   return (
-    <div className="flex flex-col items-center w-full gap-3">
+    <div className={`flex flex-col items-center w-full gap-3 ${compact ? 'max-w-sm' : ''}`}>
       <div
-        className={`flex items-stretch w-full max-w-xl rounded-full border transition-all overflow-visible
-        ${
-          activeField
-            ? 'border-neutral-300 dark:border-neutral-600 shadow-lg'
-            : 'border-neutral-200 dark:border-neutral-700 shadow-sm hover:shadow-md'
-        } bg-white dark:bg-neutral-900`}
+         className={`flex items-stretch w-full rounded-full border transition-all overflow-visible
+        ${compact ? 'max-w-sm shadow-sm' : 'max-w-xl'}
+        ${activeField ? 'border-neutral-300 dark:border-neutral-600 shadow-lg' : 'border-neutral-200 dark:border-neutral-700 shadow-sm hover:shadow-md'}
+        bg-white dark:bg-neutral-900`}
       >
         <LocationField
           active={activeField === 'location'}
