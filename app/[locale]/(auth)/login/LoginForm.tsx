@@ -1,5 +1,8 @@
-import { Mail, Lock, LogIn } from 'lucide-react';
+'use client';
+
+import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 interface FormLoginProps {
@@ -17,81 +20,104 @@ export default function LoginForm({
   password,
   setPassword,
   handleLogin,
-    handleGoogleLogin,
+  handleGoogleLogin,
 }: FormLoginProps) {
   const t = useTranslations('authorization');
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
-    <form onSubmit={handleLogin} className="flex flex-col gap-3">
-      <div className="relative">
-        <Mail className="absolute text-neutral-400 left-3 top-3" size={16} />
-        <input
-          type="email"
-          placeholder={t('login.email')}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full py-2.5 pl-9 pr-3 text-sm border rounded-lg
-                     bg-neutral-50 dark:bg-neutral-800
-                     border-neutral-200 dark:border-neutral-700
-                     focus:outline-none focus:ring-2 focus:ring-neutral-400"
-          required
-        />
-      </div>
+    <div className="flex flex-col gap-4">
+      <form onSubmit={handleLogin} className="flex flex-col gap-3">
+        {/* Email */}
+        <div className="relative">
+          <Mail className="absolute text-neutral-400 dark:text-neutral-500 left-3 top-3" size={16} />
+          <input
+            type="email"
+            placeholder={t('login.email')}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full py-2.5 pl-9 pr-3 text-sm rounded-lg
+                       bg-white dark:bg-neutral-800
+                       border border-neutral-200 dark:border-neutral-700
+                       text-neutral-900 dark:text-neutral-100
+                       placeholder:text-neutral-400 dark:placeholder:text-neutral-500
+                       focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-white focus:border-transparent
+                       transition-all"
+            required
+          />
+        </div>
 
-      <div className="relative">
-        <Lock className="absolute text-neutral-400 left-3 top-3" size={16} />
-        <input
-          type="password"
-          placeholder={t('login.password')}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full py-2.5 pl-9 pr-3 text-sm border rounded-lg
-                     bg-neutral-50 dark:bg-neutral-800
-                     border-neutral-200 dark:border-neutral-700
-                     focus:outline-none focus:ring-2 focus:ring-neutral-400"
-          required
-        />
-      </div>
+        {/* Password */}
+        <div className="relative">
+          <Lock className="absolute text-neutral-400 dark:text-neutral-500 left-3 top-3" size={16} />
+          <input
+            type={showPassword ? 'text' : 'password'}
+            placeholder={t('login.password')}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full py-2.5 pl-9 pr-10 text-sm rounded-lg
+                       bg-white dark:bg-neutral-800
+                       border border-neutral-200 dark:border-neutral-700
+                       text-neutral-900 dark:text-neutral-100
+                       placeholder:text-neutral-400 dark:placeholder:text-neutral-500
+                       focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-white focus:border-transparent
+                       transition-all"
+            required
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute transition-colors right-3 top-3 text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300"
+          >
+            {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+          </button>
+        </div>
 
-            {/* Divider */}
-        <div className="h-px bg-neutral-100 dark:bg-neutral-800" />
-        
-            {/* Actions */}
-            <div className="flex flex-col gap-2 p-4">
-              <motion.button
-                whileTap={{ scale: 0.97 }}
-                type="submit"
-                onClick={handleLogin}
-                className="flex items-center justify-center gap-1.5 py-2.5 text-sm font-medium rounded-xl
-                  transition-colors bg-neutral-900 dark:bg-white
-                  text-white dark:text-neutral-900
-                  hover:bg-neutral-700 dark:hover:bg-neutral-200"
-              >
-                <LogIn size={14} strokeWidth={2} />
-                {t('login.login')}
-              </motion.button>
+        {/* Login Button */}
+        <motion.button
+          whileTap={{ scale: 0.98 }}
+          type="submit"
+          className="w-full py-2.5 mt-1 text-sm font-medium rounded-lg
+                     bg-neutral-900 dark:bg-white
+                     text-white dark:text-neutral-900
+                     hover:bg-neutral-700 dark:hover:bg-neutral-200
+                     transition-colors"
+        >
+          {t('login.login')}
+        </motion.button>
 
-              <div className="flex items-center gap-2 px-1">
-                <div className="flex-1 h-px bg-neutral-200 dark:bg-neutral-700" />
-                <span className="text-xs text-neutral-400">{t('login.or')}</span>
-                <div className="flex-1 h-px bg-neutral-200 dark:bg-neutral-700" />
-              </div>
+        {/* Divider */}
+        <div className="relative my-2">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-neutral-200 dark:border-neutral-700"></div>
+          </div>
+          <div className="relative flex justify-center text-xs">
+            <span className="px-2 bg-white dark:bg-neutral-900 text-neutral-500">
+              {t('login.or')}
+            </span>
+          </div>
+        </div>
 
-              <motion.button
-                whileTap={{ scale: 0.97 }}
-                onClick={handleGoogleLogin}
-                className="flex items-center justify-center w-full gap-2 py-2.5 text-sm font-medium
-                  border rounded-xl border-neutral-200 dark:border-neutral-700
-                  hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
-              >
-               <img
-                    src="https://i.ibb.co/fdtTYvWf/transparent-google-logo-google-logo-in-black-circle-colorful-1710875294177.webp"
-                    alt="Google logo"
-                    width={16}
-                    height={16}
-                    />
-                {t('login.login_with_google')}
-              </motion.button>
-            </div>
-    </form>
+        {/* Google Login */}
+        <motion.button
+          whileTap={{ scale: 0.98 }}
+          type="button"
+          onClick={handleGoogleLogin}
+          className="w-full py-2.5 text-sm font-medium rounded-lg flex items-center justify-center gap-2
+                     bg-white dark:bg-neutral-800
+                     border border-neutral-200 dark:border-neutral-700
+                     text-neutral-700 dark:text-neutral-300
+                     hover:bg-neutral-50 dark:hover:bg-neutral-700
+                     transition-colors"
+        >
+          <img
+            src="https://www.google.com/favicon.ico"
+            alt="Google"
+            className="w-4 h-4"
+          />
+          {t('login.login_with_google')}
+        </motion.button>
+      </form>
+    </div>
   );
 }

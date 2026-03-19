@@ -7,5 +7,12 @@
   "or": "ou",
   "login_with_google": "Entrar com Google",
   "error_invalid_email": "Email inválido",
-  "error_invalid_pass": "Senha incorreta"}
+  "error_invalid_pass": "Senha incorreta"},
+    "register": {
+        "create_accounting": "Create Account",
+        "register_legend": "Fill in your details to continue",
+        "full_name": "Full Name",
+        "create": "Create Account",
+        "cell_phone": "Phone Number"
+    }
 }

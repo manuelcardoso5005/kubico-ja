@@ -1,8 +1,7 @@
 import {useTranslations} from 'next-intl';
-
+import Home from "@/app/[locale]/(public)/home/page"
 
  
 export default function HomePage() {
-  const t = useTranslations('common');
-  return <button>{t('botao_entrar')}</button>;
+  return <Home />;
 }

@@ -8,6 +8,7 @@ import Overlay from '@/components/overlay/OverlayAuth';
 import RegisterForm from './RegisterForm';
 import { registerWithEmail, registerWithGoogle } from '@/utils/utils';
 import { RegisterData } from "@/types/register";
+import { useTranslations } from 'next-intl';
 
 type Props = {
   open: boolean;
@@ -16,7 +17,8 @@ type Props = {
 
 export default function RegisterModal({ open, onClose }: Props) {
   const [error, setError] = useState('');
-
+  const t = useTranslations('authorization');
+  
   useEffect(() => {
     if (!open) return;
     const handle = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };

@@ -1,5 +1,9 @@
 export default function HomePage(){
     return (
-        <div>VocationPage</div>
+        <main>
+            <section>
+                destaque
+            </section>
+        </main>
     )
 }

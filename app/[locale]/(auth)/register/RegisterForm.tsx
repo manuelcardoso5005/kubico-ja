@@ -3,7 +3,7 @@
 import { Mail, Lock, User, Phone, UserPlus } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import RoleSelect from "./_components/RoleSelect"
+import { useTranslations } from 'next-intl';
 
 type Props = {
   onSubmit: (data: any) => void;
@@ -27,7 +27,7 @@ export default function RegisterForm({ onSubmit, handleGoogleRegister }: Props) 
     e.preventDefault();
     onSubmit(form);
   };
-
+  const t = useTranslations('authorization');
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-3">
       
