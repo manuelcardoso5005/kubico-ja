@@ -4,18 +4,31 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import LanguageSwitcher from './_components/LanguageSwitcher';
 import ThemeToggle from './_components/ThemeToggle';
-import HeaderLogo from './_components/HeaderLogo';
+import HeaderLogo from './_components/HeaderLogo/HeaderLogo';
 import Navbar from './_components/Navbar';
-import HeaderMenu from './_components/HeaderMenu';
+import HeaderMenu from './_components/HeaderMenu/HeaderMenu';
 import HeaderSearch from './_components/HeaderSearch/HeaderSearch';
+import AuthPanel from './_components/authpanel/authpanel';
 
 export default function HeaderPage() {
+  //const [isAuth, setIsAuth] = useState<boolean | null>(null);
   const [scrolled, setScrolled] = useState(false);
-
+  const isAuth = true;
+  
   useEffect(() => {
     const handle = () => setScrolled(window.scrollY > 10);
     window.addEventListener('scroll', handle, { passive: true });
     return () => window.removeEventListener('scroll', handle);
+  }, []);
+  
+
+  useEffect(() => {
+    const hasToken = document.cookie
+      .split("; ")
+      .some(c => c.startsWith("token="));
+
+    //setIsAuth(hasToken);
+    //setIsAuth(false);
   }, []);
 
   return (
@@ -58,8 +71,9 @@ export default function HeaderPage() {
         <div className="flex items-center gap-1 ml-auto">
           <ThemeToggle />
           <LanguageSwitcher />
+          
           <div className="w-px h-5 mx-2 bg-neutral-200 dark:bg-neutral-700" />
-          <HeaderMenu />
+          {isAuth ? <AuthPanel /> : <HeaderMenu />}
         </div>
       </div>
 
@@ -72,7 +86,7 @@ export default function HeaderPage() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25 }}
-            className="overflow-hidden"
+            className=""
           >
             <div className="px-6 py-2.5 max-w-screen-2xl mx-auto">
               <HeaderSearch />

@@ -5,6 +5,8 @@ import { Link } from '@/i18n/routing';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, Settings, Power, UserRound, Home, Plane, Compass } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import LogoutConfirmModal from './LogoutConfirmModal';
+
 
 const menuItems = [
   { href: '/profile', label: 'auth.profile', icon: UserRound },
@@ -21,6 +23,7 @@ export default function HeaderMenu() {
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const t = useTranslations('header');
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -113,7 +116,10 @@ export default function HeaderMenu() {
             {/* Sair */}
             <div className="p-1 border-t border-neutral-100 dark:border-neutral-800">
               <button
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  setOpen(false);
+                  setConfirmOpen(true);
+                }}
                 className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-colors cursor-pointer"
               >
                 <Power size={14} strokeWidth={1.8} />
@@ -123,6 +129,18 @@ export default function HeaderMenu() {
           </motion.div>
         )}
       </AnimatePresence>
+      <LogoutConfirmModal
+        open={confirmOpen}
+        onClose={() => setConfirmOpen(false)}
+        onConfirm={() => {
+          setConfirmOpen(false);
+
+          // 👉 Aqui você faz logout de verdade
+          document.cookie = "token=; Max-Age=0; path=/";
+
+          window.location.reload(); // ou router.push('/')
+        }}
+      />
     </div>
   );
 }

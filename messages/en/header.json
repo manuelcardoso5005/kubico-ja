@@ -4,7 +4,9 @@
     "register": "Register",
     "profile": "Profile",
     "logout": "Logout",
-    "settings": "Settings"
+    "settings": "Settings",
+    "logout_confirm": "Are you sure you want to logout?",
+    "cancel": "Cancel"
   },
   "navigation": {
     "explore": "Explore",
@@ -33,6 +35,8 @@
     "to":"To",
     "low":"Up to 5 000 Kz",
     "medium":"5 000–15 000 Kz",
-    "high":"15 000 Kz+"
+    "high":"15 000 Kz+",
+    "login":"Login",
+    "register":"Register"
   }
 }

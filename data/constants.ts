@@ -7,7 +7,7 @@ export const QUICK_OPTIONS: QuickOption[] = [
 ];
 
 export const provinces = [
-  'Luanda', 'Bengo', 'Benguela', 'Bié', 'Cabinda',
+  'Qualquer','Luanda', 'Bengo', 'Benguela', 'Bié', 'Cabinda',
   'Cuando', 'Cubango', 'Cuanza Norte', 'Cuanza Sul', 'Cunene',
   'Huambo', 'Huíla', 'Lunda Norte', 'Lunda Sul', 'Malanje',
   'Moxico', 'Namibe', 'Uíge', 'Zaire'

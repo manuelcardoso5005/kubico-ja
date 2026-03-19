@@ -4,7 +4,9 @@
     "register": "Criar conta",
     "profile": "Perfil",
     "logout": "Sair",
-    "settings": "Configurações"
+    "settings": "Configurações",
+    "logout_confirm": "Tem certeza que deseja sair?",
+    "cancel": "Cancelar"
   },
   "navigation": {
     "explore": "Experiências",
