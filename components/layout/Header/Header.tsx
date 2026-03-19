@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import LanguageSwitcher from './_components/LanguageSwitcher';
-import ThemeToggle from './_components/ThemeToggle';
+import LanguageSwitcher from '../../UI/LanguageSwitcher';
+import ThemeToggle from '../../UI/ThemeToggle';
 import HeaderLogo from './_components/HeaderLogo/HeaderLogo';
 import Navbar from './_components/Navbar';
 import HeaderMenu from './_components/HeaderMenu/HeaderMenu';

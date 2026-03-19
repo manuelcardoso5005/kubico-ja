@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { LogIn, UserPlus } from 'lucide-react';
 import AuthButton from './_components/AuthButton';
-import LoginModal from '@/app/[locale]/auth/login/LoginModal';
+import LoginModal from '@/app/[locale]/(auth)/login/LoginModal';
 
 export default function AuthPanel() {
   const t = useTranslations('header');

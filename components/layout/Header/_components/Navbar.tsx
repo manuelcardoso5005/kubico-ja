@@ -6,8 +6,8 @@ import { useTranslations } from 'next-intl';
 
 const navLinks = [
   { href: '/', key: 'navigation.homes' },
-  { href: '/contact', key: 'navigation.vacation' },
-  { href: '/about', key: 'navigation.explore' },
+  { href: '/vocation', key: 'navigation.vacation' },
+  { href: '/explore', key: 'navigation.explore' },
 ];
 
 export default function Navbar() {
