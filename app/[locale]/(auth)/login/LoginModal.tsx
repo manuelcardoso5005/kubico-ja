@@ -7,6 +7,7 @@ import { LogIn } from 'lucide-react';
 import Overlay from '@/components/overlay/OverlayAuth';
 import LoginForm from './LoginForm';
 import { loginWithEmail, loginWithGoogle } from '@/utils/utils';
+import { useTranslations } from 'next-intl';
 
 type Props = {
   open: boolean;
@@ -17,6 +18,7 @@ export default function LoginModal({ open, onClose }: Props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const t = useTranslations('authorization');
 
   useEffect(() => {
     if (!open) return;
@@ -54,11 +56,11 @@ export default function LoginModal({ open, onClose }: Props) {
           clickOutside={onClose}
           onClose={onClose}
           icon={<LogIn size={18} strokeWidth={2} className="text-neutral-500" />}
-          title="Entrar"
-          legend="Aceda à sua conta para continuar."
+          title={t('login.login')}
+          legend={t('login.login_legend')}
         >
           <div className="px-5 pb-5">
-            {error && <p className="mb-2 text-sm text-red-500">{error}</p>}
+            {error && <p className="mb-2 text-sm text-red-500">{t(error)}</p>}
             <LoginForm
               email={email}
               setEmail={setEmail}

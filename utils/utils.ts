@@ -12,8 +12,8 @@ export const validatePassword = (password: string) => {
 
 // Função de login simulada
 export const loginWithEmail = async (email: string, password: string) => {
-  if (!validateEmail(email)) throw new Error('Email inválido');
-  if (!validatePassword(password)) throw new Error('Senha inválida');
+  if (!validateEmail(email)) throw new Error('login.error_invalid_email');
+  if (!validatePassword(password)) throw new Error('login.error_invalid_pass');
   
   // Simula login
   return { success: true, user: { email } };

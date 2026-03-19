@@ -1,0 +1,11 @@
+{
+    "login":{
+  "login": "Entrar",
+  "login_legend": "Aceda à sua conta para continuar",
+  "email": "Email",
+  "password": "Senha",
+  "or": "ou",
+  "login_with_google": "Entrar com Google",
+  "error_invalid_email": "Email inválido",
+  "error_invalid_pass": "Senha incorreta"}
+}

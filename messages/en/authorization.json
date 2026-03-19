@@ -1,0 +1,10 @@
+{ "login":{
+  "login": "Login",
+  "login_legend": "Access your account to continue",
+  "email": "Email",
+  "password": "Password",
+  "or": "or",
+  "login_with_google": "Login with Google",
+  "error_invalid_email": "Invalid email",
+  "error_invalid_pass": "Incorrect password"
+}}

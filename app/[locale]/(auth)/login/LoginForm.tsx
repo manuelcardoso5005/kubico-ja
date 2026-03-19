@@ -1,5 +1,6 @@
 import { Mail, Lock, LogIn } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 
 interface FormLoginProps {
   email: string;
@@ -18,13 +19,14 @@ export default function LoginForm({
   handleLogin,
     handleGoogleLogin,
 }: FormLoginProps) {
+  const t = useTranslations('authorization');
   return (
     <form onSubmit={handleLogin} className="flex flex-col gap-3">
       <div className="relative">
         <Mail className="absolute text-neutral-400 left-3 top-3" size={16} />
         <input
           type="email"
-          placeholder="Email"
+          placeholder={t('login.email')}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="w-full py-2.5 pl-9 pr-3 text-sm border rounded-lg
@@ -39,7 +41,7 @@ export default function LoginForm({
         <Lock className="absolute text-neutral-400 left-3 top-3" size={16} />
         <input
           type="password"
-          placeholder="Senha"
+          placeholder={t('login.password')}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="w-full py-2.5 pl-9 pr-3 text-sm border rounded-lg
@@ -65,12 +67,12 @@ export default function LoginForm({
                   hover:bg-neutral-700 dark:hover:bg-neutral-200"
               >
                 <LogIn size={14} strokeWidth={2} />
-                Entrar
+                {t('login.login')}
               </motion.button>
 
               <div className="flex items-center gap-2 px-1">
                 <div className="flex-1 h-px bg-neutral-200 dark:bg-neutral-700" />
-                <span className="text-xs text-neutral-400">ou</span>
+                <span className="text-xs text-neutral-400">{t('login.or')}</span>
                 <div className="flex-1 h-px bg-neutral-200 dark:bg-neutral-700" />
               </div>
 
@@ -87,7 +89,7 @@ export default function LoginForm({
                     width={16}
                     height={16}
                     />
-                Entrar com Google
+                {t('login.login_with_google')}
               </motion.button>
             </div>
     </form>
