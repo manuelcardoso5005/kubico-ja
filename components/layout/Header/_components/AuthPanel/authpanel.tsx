@@ -6,14 +6,16 @@ import { useRouter } from 'next/navigation';
 import { LogIn, UserPlus } from 'lucide-react';
 import AuthButton from './_components/AuthButton';
 import LoginModal from '@/app/[locale]/(auth)/login/LoginModal';
+import RegisterModal from '@/app/[locale]/(auth)/register/RegisterModal';
 
 export default function AuthPanel() {
   const t = useTranslations('header');
   const router = useRouter();
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
 
   const openLogin = () => setIsLoginOpen(true);
-  const openRegister = () => router.push('/auth/register');
+  const openRegister = () => setIsRegisterOpen(true);
 
   return (
     <div className="flex items-center gap-2">
@@ -30,6 +32,7 @@ export default function AuthPanel() {
         variant="register"
       />
       {isLoginOpen && <LoginModal  open={isLoginOpen} onClose={() => setIsLoginOpen(false)} />}
+      {isRegisterOpen && <RegisterModal  open={isRegisterOpen} onClose={() => setIsRegisterOpen(false)} />}
     </div>
   );
 }

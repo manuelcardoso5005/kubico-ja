@@ -8,7 +8,7 @@ import HeaderLogo from './_components/HeaderLogo/HeaderLogo';
 import Navbar from './_components/Navbar';
 import HeaderMenu from './_components/HeaderMenu/HeaderMenu';
 import HeaderSearch from './_components/HeaderSearch/HeaderSearch';
-import AuthPanel from './_components/authpanel/authpanel';
+import AuthPanel from './_components/AuthPanel/authpanel';
 
 export default function HeaderPage() {
   //const [isAuth, setIsAuth] = useState<boolean | null>(null);
