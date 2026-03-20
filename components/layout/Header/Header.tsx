@@ -35,7 +35,7 @@ export default function HeaderPage() {
     <header className="sticky top-0 z-50 w-full border-b bg-white/95 dark:bg-neutral-950/95 backdrop-blur-sm border-neutral-200 dark:border-neutral-800">
 
       {/* Linha 1 — Logo | Nav/Search | Controlos */}
-      <div className="relative flex items-center h-16 px-6 mx-auto max-w-screen-2xl">
+      <div className="relative flex items-center h-16 px-0 mx-auto max-w-screen-2xl">
 
         {/* Esquerda */}
         <HeaderLogo />

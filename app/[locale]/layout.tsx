@@ -16,7 +16,7 @@ export default async function LocaleLayout({
  
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body>
+      <body className="px-3 sd:px-0 md:px-6">
         <NextIntlClientProvider messages={messages}>
           <Header />
           {children}
