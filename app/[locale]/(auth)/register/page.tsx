@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import RegisterModal from './RegisterModal';
 
-export default function Page() {
+export default function RegisterPage() {
   const [open, setOpen] = useState(true);
   const router = useRouter();
 
